@@ -52,6 +52,36 @@ footer{margin-top:clamp(36px,5vw,52px);font:500 clamp(.72rem,1.8vw,.9rem)/1.6 va
 .fade{opacity:0;transform:translateY(12px);animation:up .7s cubic-bezier(.2,.7,.2,1) forwards}
 @keyframes up{to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.fade{opacity:1;transform:none;animation:none}.cta{transition:none}}
+html{scroll-behavior:smooth}
+.wrap{overflow-x:clip}
+.signup{position:relative;margin:clamp(56px,8vw,96px) auto 0;max-width:640px;padding:clamp(30px,5vw,48px) clamp(22px,4vw,44px);
+background:linear-gradient(180deg,rgba(92,225,193,.08),rgba(92,225,193,.02));border:1px solid rgba(92,225,193,.22);border-radius:28px;overflow:hidden;scroll-margin-top:24px}
+.signup::before{content:"";position:absolute;inset:-60% -20% auto;height:120%;background:radial-gradient(closest-side,rgba(92,225,193,.16),transparent);pointer-events:none}
+.signup h2{position:relative;margin:0 auto;font-weight:600;font-size:clamp(1.7rem,4.4vw,2.8rem);line-height:1.12;letter-spacing:-.02em}
+.signup h2 em{display:block;font:italic 400 1.08em/1 var(--serif);color:var(--mint)}
+.signup p.lead{position:relative;margin:14px auto 0;max-width:460px;color:var(--muted);font-size:1.05rem}
+.ea-form{position:relative;display:flex;gap:10px;margin:28px auto 0;max-width:500px;padding:6px;background:rgba(5,6,9,.7);border:1px solid var(--line);border-radius:999px}
+.ea-form:focus-within{border-color:rgba(92,225,193,.6)}
+.ea-form input[type=email]{flex:1;min-width:0;padding:14px 18px;background:transparent;border:0;outline:0;color:var(--text);font:inherit;font-size:1.05rem}
+.ea-form input[type=email]::placeholder{color:#6b6b74}
+.btn{flex:none;padding:14px 24px;border:0;border-radius:999px;background:var(--mint);color:#04110d;font:600 1.02rem/1 var(--sans);cursor:pointer;transition:background .2s ease}
+.btn:hover{background:var(--mint2)}
+.btn[disabled]{opacity:.6;cursor:default}
+.btn:focus-visible,.social a:focus-visible{outline:3px solid var(--text);outline-offset:4px}
+.status{position:relative;min-height:1.5em;margin:14px 0 0;font-size:.95rem;color:var(--muted)}
+.status.ok{color:var(--mint)}
+.status.err{color:#ff8a8a}
+.done{position:relative;display:none;margin-top:26px;font-size:1.15rem}
+.done .tick{display:inline-grid;place-items:center;width:44px;height:44px;margin-bottom:12px;border-radius:50%;background:rgba(92,225,193,.14);color:var(--mint);font-size:1.3rem}
+.signup.is-done .ea-form,.signup.is-done .status{display:none}
+.signup.is-done .done{display:block}
+.fine{position:relative;margin:4px 0 0;font-size:.85rem;color:#71717a}
+.social{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:clamp(40px,6vw,64px) 0 0}
+.social a{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--text);text-decoration:none;font-size:.98rem;transition:border-color .2s ease}
+.social a:hover{border-color:rgba(92,225,193,.5)}
+.social svg{width:17px;height:17px;flex:none}
+@media(max-width:480px){.ea-form{flex-direction:column;border-radius:22px;padding:8px}.btn{padding:16px}.ea-form input[type=email]{text-align:center}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
 </style>
 </head>
 <body>
@@ -74,13 +104,48 @@ footer{margin-top:clamp(36px,5vw,52px);font:500 clamp(.72rem,1.8vw,.9rem)/1.6 va
     <li class="card"><span class="num">02</span><div><strong>Compete in 7-day Arenas.</strong><span class="d">With a live leaderboard.</span></div></li>
     <li class="card"><span class="num">03</span><div><strong>Skip the resume.</strong><span class="d">Send the link.</span></div></li>
   </ul>
+  <section class="signup" id="early-access" aria-labelledby="ea-title">
+    <h2 id="ea-title">Get <em>early access.</em></h2>
+    <p class="lead">Drop your email and I'll let you know as soon as you can try LaunchArena.</p>
+    <form class="ea-form" id="ea-form" novalidate>
+      <label for="ea-email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Email address</label>
+      <input id="ea-email" type="email" name="email" placeholder="you@email.com" autocomplete="email" inputmode="email" required>
+      <button class="btn" type="submit">Join the waitlist</button>
+    </form>
+    <p class="status" id="ea-status" role="status" aria-live="polite"></p>
+    <div class="done" aria-live="polite"><div class="tick" aria-hidden="true">&#10003;</div><div>You're on the list. Talk soon.</div></div>
+    <p class="fine">Just launch updates. No spam.</p>
+  </section>
+  <nav class="social" aria-label="Find LaunchArena">
+    <a href="https://www.instagram.com/launcharena" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="#5CE1C1" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".7" fill="#5CE1C1" stroke="none"/></svg>@launcharena</a>
+    <a href="https://www.tiktok.com/@launcharena" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path fill="#5CE1C1" d="M14.5 3h3c.2 1.9 1.6 3.4 3.5 3.6v3c-1.3 0-2.5-.4-3.5-1v6.6a6 6 0 1 1-6-6c.3 0 .7 0 1 .1v3.1a3 3 0 1 0 2 2.8V3z"/></svg>@launcharena</a>
+    <a href="mailto:launcharena.hq@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="#5CE1C1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg>launcharena.hq@gmail.com</a>
+  </nav>
   <footer>LaunchArena &middot; The social platform for builders.</footer>
 </main>
 <script>
-var FORM_URL="https://forms.gle/npyzbj5p54NzEyJR6"; /* paste your Google Form or Tally link here */
-var cta=document.getElementById("cta"),msg=document.getElementById("msg");
-if(FORM_URL){cta.href=FORM_URL;cta.target="_blank";cta.rel="noopener"}
-else{cta.addEventListener("click",function(e){e.preventDefault();msg.hidden=false})}
+/* Waitlist: submits straight into the LaunchArena Google Form. */
+var FORM_ID="1FAIpQLSeCCGkjUIsZRNI19hYgQdiN5tLCaa1pG5vVpP5Yri9EPrUjLg";
+var ENTRY_ID="261561306";
+var FORM_URL="https://forms.gle/npyzbj5p54NzEyJR6";
+(function(){
+  var cta=document.getElementById("cta");
+  if(cta){cta.href="#early-access";cta.addEventListener("click",function(){setTimeout(function(){var i=document.getElementById("ea-email");if(i)i.focus({preventScroll:true})},450)})}
+  var form=document.getElementById("ea-form"),input=document.getElementById("ea-email"),
+      status=document.getElementById("ea-status"),box=document.getElementById("early-access"),btn=form.querySelector(".btn");
+  function say(t,c){status.textContent=t;status.className="status"+(c?" "+c:"")}
+  form.addEventListener("submit",function(e){
+    e.preventDefault();
+    var v=(input.value||"").trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){say("That email doesn't look right. Mind checking it?","err");input.focus();return}
+    if(!ENTRY_ID){window.open(FORM_URL,"_blank","noopener");say("Opening the signup form in a new tab…","ok");return}
+    btn.disabled=true;say("Adding you…");
+    var body=new URLSearchParams();body.append("entry."+ENTRY_ID,v);
+    fetch("https://docs.google.com/forms/d/e/"+FORM_ID+"/formResponse",{method:"POST",mode:"no-cors",body:body})
+      .then(function(){box.classList.add("is-done")})
+      .catch(function(){btn.disabled=false;say("Something went wrong. Try again, or use the form directly.","err")});
+  });
+})();
 </script>
 </body>
 </html>
